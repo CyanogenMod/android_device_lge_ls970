@@ -33,7 +33,7 @@ DEVICE_PACKAGE_OVERLAYS += device/lge/gee-common/overlay-cdma
 $(call inherit-product, device/lge/gee-common/gee-common.mk)
 
 PRODUCT_COPY_FILES += \
-    device/lge/geehrc_sp/recovery.fstab:root/fstab.geehrc \
+    device/lge/geehrc_sp/recovery.fstab:root/fstab.geehrc
 
 # Enable for debugging
 PRODUCT_PROPERTY_OVERRIDES += \
