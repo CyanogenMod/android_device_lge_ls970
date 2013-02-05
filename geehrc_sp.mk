@@ -42,19 +42,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     
 PRODUCT_CHARACTERISTICS := nosdcard   
 
-PRODUCT_PROPERTY_OVERRIDES += \
-   telephony.lteOnCdmaDevice=1 \
-   telephony.lte.cdma.device=1 \
-   ro.telephony.default_network=8 \
-   ro.ril.def.preferred.network=8 \
-   ril.subscription.types=NV,RUIM \
-   ro.config.svlte1x=true \
-   ro.cdma.subscribe_on_ruim_ready=true \
-   persist.radio.no_wait_for_card=1 \
-   ro.cdma.home.operator.numeric=310120 \
-   ro.cdma.home.operator.alpha=Sprint \
-   telephony.sms.pseudo_multipart=1
-
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml \
