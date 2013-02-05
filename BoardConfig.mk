@@ -17,8 +17,8 @@
 BOARD_KERNEL_CMDLINE := console=ttySHL0,115200,n8 androidboot.hardware=geehrc lpj=67677
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01600000
 
-TARGET_KERNEL_CONFIG := tiamat_geehrc_defconfig
-TARGET_KERNEL_SOURCE := kernel/lge/tiamat_geehrc
+TARGET_KERNEL_CONFIG := geehrc_sp_defconfig
+TARGET_KERNEL_SOURCE := kernel/lge/gee-common
 
 # inherit from gee-common
 -include device/lge/gee-common/BoardConfigCommon.mk
