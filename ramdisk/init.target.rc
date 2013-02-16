@@ -1,0 +1,390 @@
+# Copyright (c) 2011, Code Aurora Forum. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above
+#       copyright notice, this list of conditions and the following
+#       disclaimer in the documentation and/or other materials provided
+#       with the distribution.
+#     * Neither the name of Code Aurora Forum, Inc. nor the names of its
+#       contributors may be used to endorse or promote products derived
+#       from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+# To enumeration USB
+# Move here from middle of this file
+# 20120320 jaejoong.kim@lge.com
+import init.lge.usb.rc
+
+
+#start camera server as daemon
+service qcamerasvr /system/bin/mm-qcamera-daemon
+        class late_start
+        user system
+        group system camera inet
+
+#start GNSS/Sensor interface daemon
+#service gsiff_daemon /system/bin/gsiff_daemon
+#    class late_start
+#    user system
+#    group gps qcom_oncrpc net_raw
+
+# on emmc mount the partition containing firmware
+#on emmc-fs
+on emmc-afterfmt
+   mkdir /persist-lg 0771 system system
+   mount ext4 /dev/block/platform/msm_sdcc.1/by-name/drm /persist-lg nosuid nodev barrier=1 noauto_da_alloc
+   mkdir /tombstones 0771 system system
+ 
+   wait /dev/block/platform/msm_sdcc.1/by-name/tombstones
+   exec /system/bin/e2fsck -y /dev/block/platform/msm_sdcc.1/by-name/tombstones
+ 
+   mount ext4 /dev/block/platform/msm_sdcc.1/by-name/tombstones /tombstones nosuid nodev barrier=1
+   mkdir /tombstones/modem 0771 system system
+   mkdir /tombstones/lpass 0771 system system
+   mkdir /tombstones/wcnss 0771 system system
+   mkdir /tombstones/dsps 0771 system system
+   mkdir /tombstones/mdm 0771 system system
+   mkdir /firmware 0771 system system
+   wait /dev/block/mmcblk0p1
+#LGE_CHANGE_S, [alex.koo], 2011-05-23, NON-HLOS image file permission
+   mount vfat /dev/block/mmcblk0p1 /firmware ro umask=002 shortname=lower
+#LGE_CHANGE_E, [alex.koo], 2011-05-23, NON-HLOS image file permission
+   # LGE_CHANGE_S, [2012-03-21], ilsoo.jung@lge.com, NOT_USE_SYSTEM_REMOUNT. non_hlos symbolic links are generated at compile time
+   #exec /system/bin/sh /system/etc/init.qcom.modem_links.sh
+   #exec /system/bin/sh /system/etc/init.qcom.mdm_links.sh
+   # LGE_CHANGE_E, [2012-03-21], ilsoo.jung@lge.com, NOT_USE_SYSTEM_REMOUNT. non_hlos symbolic links are generated at compile time
+   # LGE_CHANGE [2012-04-03], sangyup.kim@lge.com Symbolic link is generated at compile time
+   #exec /system/bin/sh /system/etc/init.qcom.thermald_conf.sh
+
+# NOT_USE_SYSTEM_REMOUNT
+#on post-fs
+#   mount ext4 /dev/block/platform/msm_sdcc.1/by-name/system /system ro remount barrier=1
+   
+on boot
+# remove cyttsp function
+#   write /sys/devices/i2c-3/3-0024/cyttsp_update_fw 1
+   write /sys/devices/i2c-3/3-005b/update_fw 1
+   write /sys/devices/i2c-3/3-004a/update_fw 1
+   start qcamerasvr
+
+# Factory
+   chown system system /dev/hsic0
+   chmod 0660 /dev/hsic0
+
+service thermald /system/bin/thermald
+   class main
+   user root
+   group root
+
+service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
+   user root
+   disabled
+
+#service qosmgrd /system/bin/qosmgr /system/etc/qosmgr_rules.xml --no_android_log
+#   user system
+#   group system
+#   disabled
+
+# yongmin.jung@lge.com 2012.07.10 change qcks, ks, efsks into system process
+service kickstart /system/bin/qcks l
+    user system
+    group system
+    oneshot
+    disabled
+
+#service mdm_helper /system/bin/mdm_helper
+#    class main
+#    oneshot
+#    disabled
+
+#LGE_CHANGE_S, not start qrngd service. qrngd need root permission to properly operation. until now, this service didn't operated properly.
+#service qrngd /system/bin/qrngd -f
+#   class main
+#   user system
+#   group system
+#LGE_CHANGE_E
+
+service qseecomd /system/bin/qseecomd
+   class late_start
+   user system
+   group system
+
+# Start kickstart if mdm is detected
+on property:ro.baseband=mdm
+   mkdir /data/qcks 0770 system system
+   start kickstart
+
+# Load SMUX line discipline for Fusion 4
+#on property:ro.baseband=sglte
+#    exec /system/bin/n_smux /dev/ttyHS1
+
+# Start up mdm_helper if sglte detected
+on property:ro.baseband=sglte
+    start mdm_helper
+
+service usf_tester /system/bin/usf_tester
+    user system
+    group system inet
+    disabled
+
+service usf_epos /system/bin/usf_epos
+    user system
+    group system inet
+    disabled
+
+service usf_gesture /system/bin/usf_gesture
+    user system
+    group system inet
+    disabled
+
+service usf_p2p /system/bin/usf_p2p
+    user system
+    group system inet
+    disabled
+
+service usf_hovering /system/bin/usf_hovering
+    user system
+    group system inet
+    disabled
+
+service usf-post-boot /system/bin/sh /system/etc/usf_post_boot.sh
+    class late_start
+    user root
+    disabled
+    oneshot
+
+# hongik.lee@lge.com 2012.07.26 write eventlog for boot animation ends
+#service write_event_log /system/bin/write_event_log 55000
+#    user system
+#    group system
+#    disabled
+#    oneshot
+
+#on property:init.svc.bootanim=stopped
+#    start usf-post-boot
+#    start write_event_log
+
+# LGE_CHANGE : dirty_writeback_centisecs & dirty_expire_centisecs params are reconfigued here to default value
+#    write /proc/sys/vm/dirty_writeback_centisecs 500
+#    write /proc/sys/vm/dirty_expire_centisecs 200
+#    write /sys/module/lge_handle_panic/parameters/on_hidden_reset 0
+
+# LGE_CHANGE For MTP
+on init
+    export EXTERNAL_ADD_STORAGE /mnt/sdcard/external_sd
+#    mkdir /mnt/sdcard/external_sd 0000 system system
+
+# LGE_CHANGE For MTP
+#when using fuse sdcard, it's needed for mounting for crypt fs.
+   setprop ro.crypto.fuse_sdcard true
+
+#dongjin.sim temp for All Auto Test
+# LGE_CHANGE : change alarm permission to default 664 for pre-AVL requirement
+   chmod 664 /dev/alarm
+
+   chmod 644 /sys/class/leds/button-backlight/brightness #[sehwan09.park] change socket's permission from 646 to 644
+   chmod 646 /sys/class/leds/red/brightness
+   chmod 646 /sys/class/leds/green/brightness
+   chmod 646 /sys/class/leds/blue/brightness
+
+   # LGE_CHANGE_S add led devices
+  chown system system /sys/class/leds/led:red/brightness
+   chown system system /sys/class/leds/led:red/max_brightness
+   chown system system /sys/class/leds/led:red/trigger
+
+   chown system system /sys/class/leds/led:green/brightness
+   chown system system /sys/class/leds/led:green/max_brightness
+   chown system system /sys/class/leds/led:green/trigger
+
+   chown system system /sys/class/leds/led:blue/brightness
+   chown system system /sys/class/leds/led:blue/max_brightness
+   chown system system /sys/class/leds/led:blue/trigger
+
+   chown system system /sys/class/leds/button-backlight/brightness
+   chown system system /sys/class/leds/button-backlight/max_brightness
+
+   chmod 644 /sys/class/leds/led:red/brightness
+   chmod 644 /sys/class/leds/led:green/brightness
+   chmod 644 /sys/class/leds/led:blue/brightness
+   chmod 644 /sys/class/leds/led:red/trigger
+   chmod 644 /sys/class/leds/led:green/trigger
+   chmod 644 /sys/class/leds/led:blue/trigger
+   chmod 644 /sys/class/leds/led:red/max_brightness
+   chmod 644 /sys/class/leds/led:green/max_brightness
+   chmod 644 /sys/class/leds/led:blue/max_brightness
+   chmod 644 /sys/class/leds/button-backlight/brightness
+   chmod 644 /sys/class/leds/button-backlight/max_brightness
+   # LGE_CHANGE_E add led devices
+
+#dongjin.sim temp for All Auto Test
+
+# yeunbok.ryu keyguard file for ghost finger
+   chown system system /sys/devices/virtual/input/lge_touch/keyguard
+   chmod 664 /sys/devices/virtual/input/lge_touch/keyguardi
+
+# donguk.ki incoming_call file for ghost finger
+   chown system system /sys/devices/virtual/input/lge_touch/incoming_call
+
+# donguk.ki f54 file for synaptics f54 function
+   chown system system /sys/devices/virtual/input/lge_touch/f54
+
+# pwr-led
+   chown system system /sys/class/leds/pwr-led/brightness
+   chmod 0646 /sys/class/leds/pwr-led/brightness
+
+# vibrator
+   chown system system /sys/class/timed_output/vibrator/amp
+   chmod 0646 /sys/class/timed_output/vibrator/amp
+
+# eco mode
+   chown system system /sys/devices/platform/lge_kernel_driver/run_cpu
+   chown system system /sys/devices/platform/lge_kernel_driver/eco_cpu
+
+on post-fs-data
+# LGE_CHANGE_S Apply the MLT App [DGMS MC-C05692-3]
+    chown system system /mpt
+    chmod 0775 /mpt
+# LGE_CHANGE_E Apply the MLT App [DGMS MC-C05692-3]
+# LGE_CHANGE_S For DRM
+# on post-fs-data //already defined MTP
+    chown system system /persist-lg
+    chmod 0771 /persist-lg
+
+#    #LGDRM	
+#    mkdir /persist-lg/lgdrm 0770 lgdrm lgdrm_acc
+#    chown lgdrm lgdrm_acc /persist-lg/lgdrm
+#    chmod 0770 /persist-lg/lgdrm
+
+    #Widevine
+    mkdir /persist-lg/widevine 0770 system system
+    chown system system /persist-lg/widevine
+    chmod 0770 /persist-lg/widevine
+
+#    #DivX
+#    mkdir /persist-lg/multimedia 0770 media divxdrm
+#    chown media divxdrm /persist-lg/multimedia
+#    chmod 0770 /persist-lg/multimedia
+
+#    # create dirs if not exist
+#    mkdir /data/lgdrm 0770 lgdrm lgdrm_acc
+# LGE_CHANGE_E For DRM
+
+# LGE_CHANGE_S For DivxDRM, Nextreaming
+#    mkdir /persist-lg/multimedia/nx 0770 media divxdrm
+#    chown media divxdrm /persist-lg/multimedia/nx
+#    chmod 0770 /persist-lg/multimedia/nx
+
+#    mkdir /persist-lg/multimedia/uma 0770 media divxdrm
+#    chown media divxdrm /persist-lg/multimedia/uma
+#    chmod 0770 /persist-lg/multimedia/uma
+
+#    mkdir /persist-lg/multimedia/scnt 0770 media divxdrm
+#    chown media divxdrm /persist-lg/multimedia/scnt
+#    chmod 0770 /persist-lg/multimedia/scnt
+
+#    mkdir /persist-lg/multimedia/scnt/sdadf 0770 media divxdrm
+#    chown media divxdrm /persist-lg/multimedia/scnt/sdadf
+#    chmod 0770 /persist-lg/multimedia/scnt/sdadf
+# LGE_CHANGE_E For DivxDRM, Nextreaming
+
+# LGE_CHANGE For MTP
+# we will remap this as /mnt/sdcard with the sdcard fuse tool
+    mkdir /data/media 0775 media_rw media_rw
+    chown media_rw media_rw /data/media
+
+# partition for storing factory items
+   chown root system /dev/block/platform/msm_sdcc.1/by-name/misc
+   chmod 0660 /dev/block/platform/msm_sdcc.1/by-name/misc
+
+# Change owner to read partition size for Code CRC
+   chown root system /dev/block/mmcblk0p5
+   chmod 0660 /dev/block/mmcblk0p5
+   chown root system /dev/block/mmcblk0p7
+   chmod 0660 /dev/block/mmcblk0p7
+
+# [20111228 matthew.kim@lge.com] For Fake Battery Mode
+   chown system system /sys/devices/platform/msm_ssbi.0/pm8921-core/pm8921-charger/power_supply/battery/pseudo_batt
+# [20111228 matthew.kim@lge.com]
+
+# [START_LGE_HiddenMenu], ADD, smorke@lge.com, 2011-12-30, Add Modem subsystem
+   chown system system /sys/module/subsystem_restart/parameters/restart_level
+# [START_LGE_HiddenMenu], ADD, smorke@lge.com, 2011-12-30, Add Modem subsystem
+
+# mount debugfs yongmin.jung@lge.com 2012.07.07 apply in case of non user build
+on property:ro.build.type=eng
+   mount debugfs /sys/kernel/debug /sys/kernel/debug
+
+on property:ro.build.type=userdebug
+   mount debugfs /sys/kernel/debug /sys/kernel/debug
+
+
+# create virtual SD card at /mnt/sdcard, based on the /data/media directory
+# daemon will drop to user/group system/media_rw after initializing
+# underlying files in /data/media will be created with user and group media_rw (1023)
+service sdcard /system/bin/sdcard /data/media 1023 1023
+    class late_start
+
+# LGE_CHANGE_S, Add atd service
+service atd /system/bin/atd /dev/ttyGS0 /dev/hsic0
+   socket atd stream 0660 system inet
+   disabled
+
+# LGE_CHANGE_S [DRM] gak.yang@lge.com 2012.07.21 provisiong playready keys
+#service prkeyprov /system/xbin/prkey
+#    class late_start
+#    user root
+#    group root
+#    oneshot
+# LGE_CHANGE_E [DRM] gak.yang@lge.com 2012.07.21 provisiong playready keys
+
+on property:ro.baseband="mdm"
+   start atd
+# LGE_CHANGE_E
+
+# on chargerlogo_adbd : init.lge.usb.rc
+
+on chargerlogo
+   exec /sbin/chargerlogo
+
+
+# At First Time Format for data & tomestones & caches
+on emmc-fmt
+# data partition wait
+    wait /dev/block/platform/msm_sdcc.1/by-name/userdata
+    exec /sbin/setup_fs \
+        /dev/block/platform/msm_sdcc.1/by-name/userdata \
+        /dev/block/platform/msm_sdcc.1/by-name/cache \
+        /dev/block/platform/msm_sdcc.1/by-name/drm \
+        /dev/block/platform/msm_sdcc.1/by-name/factory \
+        /dev/block/platform/msm_sdcc.1/by-name/sns \
+        /dev/block/platform/msm_sdcc.1/by-name/mpt \
+        /dev/block/platform/msm_sdcc.1/by-name/tombstones \
+        no_reboot
+
+#  Partition Format when fastboot flashed
+on emmc-format_first
+    wait /dev/block/platform/msm_sdcc.1/by-name/userdata
+    exec /system/bin/sh /system/etc/format_first.sh
+
+#LGE_CHANGE_S soojin.chae@lge.com 2012.07.11 change permission of "proc/cmdline" for qcks when userdebug, engineer build
+on property:ro.build.type=eng
+  chmod 0444 /proc/cmdline
+
+on property:ro.build.type=userdebug
+   chmod 0444 /proc/cmdline
+#LGE_CHANGE_E soojin.chae@lge.com 2012.07.11 change permission of "proc/cmdline" for qcks when userdebug, engineer build

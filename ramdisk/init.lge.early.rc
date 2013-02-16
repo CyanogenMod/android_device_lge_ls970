@@ -1,0 +1,43 @@
+########################################
+# Secure boot
+########################################
+# Another one bytes the dust. Disable security check
+#on boot
+# [START][20111216, inhwan.we@lge.com]
+#	exec /sbin/wallpaper -ap
+#	wait /sbin/wallpaper
+# [END] [20111216, inhwan.we@lge.com]
+
+
+########################################
+#Widevine L3 has radio group to get IMEI (lg-drm@lge.com)
+#service drm /system/bin/drmserver
+#    class main
+#    user drm
+## [LGE_S][20120620][hyeyoung1024.kim@lge.com][Next-i][DRM] PlayReady DRM Porting
+#    group system inet drmrpc radio media_rw sdcard_rw
+## [LGE_E][20120620][hyeyoung1024.kim@lge.com][Next-i][DRM] PlayReady DRM Porting
+    
+########################################
+# CAPP_SECCLK
+########################################
+#service lgsecclk /system/bin/lgsecclkserver
+#    class main
+#    user system
+#    group system lgdrm_acc sdcard_rw media_rw
+
+# restart when servicemanager is restarted
+#on property:init.svc.servicemanager=restarting
+#     restart lgsecclk
+
+########################################
+# CAPP_DRM
+########################################
+#service lgdrm /system/bin/lgdrmserver
+#    class main
+#    user lgdrm
+#    group lgdrm_acc sdcard_rw media_rw system radio
+
+# restart when servicemanager is restarted
+#on property:init.svc.servicemanager=restarting
+#     restart lgdrm

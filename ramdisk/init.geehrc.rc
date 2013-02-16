@@ -1,0 +1,103 @@
+import /init.gee.rc
+import /init.lge.rc
+
+on init
+    # Set permissions for persist partition
+    mkdir /persist 0771 system system
+	
+on post-fs
+	# jaeyoungs.park@lge.com 120612	LGE_GOTA Porting from LS860
+	# matthew.choi@lge.com 120531 LGE_GOTA
+	start flash_recovery
+	
+	
+on emmc-carrier
+    wait /dev/block/platform/msm_sdcc.1/by-name/carrier
+    exec /sbin/setup_fs \
+         /dev/block/platform/msm_sdcc.1/by-name/carrier \
+         no_reboot
+
+on boot-pause
+    exec system/bin/battery_charging
+on post-fs-data
+    chmod 0755 /system/bin/ssbd # FEATURE_SDCARD_ENCRYPTION dongjune.kim@lge.com
+    setprop ro.crypto.keyfile.userdata /dev/block/platform/msm_sdcc.1/by-name/encrypt
+
+# LGE_CHANGE_S, 20120702, byungsung.cho@lge.com, APN Back Up
+    mkdir /persist-lg/LGE_RC 0770 system system
+    chown system system /persist-lg/LGE_RC
+    chmod 0770 /persist-lg/LGE_RC
+ # LGE_CHANGE_E, 20120702, byungsung.cho@lge.com, APN Back Up
+
+on emmc-afterfmt
+    mkdir /carrier 0771 system lg_fota
+    wait /dev/block/platform/msm_sdcc.1/by-name/carrier
+    exec /system/bin/e2fsck -y /dev/block/platform/msm_sdcc.1/by-name/carrier
+    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/carrier /carrier nosuid nodev barrier=1 data=ordered nodelalloc
+	chmod 0771 /carrier
+	chown system lg_fota /carrier
+    
+on boot
+    # Permissions for System Server and daemons.
+    chown system system /sys/class/leds/pwr-led/brightness
+
+    chmod 0660 /dev/ttyGS0
+    chown system system /dev/ttyGS0
+#LGE_CHANGE 2012.7.6 hkyu.lee@lge.com get usb lock status
+    chown system system /sys/devices/platform/lg_diag_cmd/diag_enable
+    chmod 0660 /sys/devices/platform/lg_diag_cmd/diag_enable
+#LGE_CHANGE 2012.7.6 hkyu.lee@lge.com get usb lock status
+
+# LGE_CHANGE_S, 20120605, hojin.ryu@lge.com,Set the status of backlight brightness when boot
+#brightness properties 
+	setprop ro.lge.lcd_default_brightness 202 
+	setprop ro.lge.lcd_auto_brightness_mode false
+# LGE_CHANGE_E, 20120605, hojin.ryu@lge.com,Set the status of backlight brightness when boot
+    
+# NFC Feature
+   chmod 0600 /dev/pn544
+   setprop ro.nfc.port I2C
+   chown nfc nfc /dev/pn544
+   
+   setprop persist.sdcrypto.featuring 2 # FEATURE_SDCARD_ENCRYPTION dongjune.kim@lge.com
+
+#   kyungsu.mok@lge change to for LS840 value 
+#   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
+    setprop net.tcp.buffersize.lte     4094,110208,1220608,4096,87380,1220608
+    setprop net.tcp.buffersize.ehrpd     4094,87380,262144,4096,16384,262144
+    
+# LGE_CHANGE_S, 20111118, smorke@lge.com, SMPL counter
+#service smpl_count /system/bin/smpl_count
+#	oneshot
+# LGE_CHANGE_E, 20111118, smorke@lge.com
+
+# LGE_CHANGE_S, 20120207, seonhui.kim@lge.com, Addition module for supporting the Mobile NFS
+#service nfsserversetup /system/bin/nfsserversetup
+#    class late_start
+#    user root
+#    oneshot
+# LGE_CHANGE_E, 20120207, seonhui.kim@lge.com
+
+# LGE_CHANGE_S, 20120816 bonkang.koo@lge.com, factory reset magic code
+#on property:sys.factory=1
+#    exec /system/bin/dd if=/system/etc/factory_reset_magic of=/dev/block/platform/msm_sdcc.1/by-name/reserved bs=512 count=1
+# LGE_CHANGE_E, 20120816 bonkang.koo@lge.com, factory reset magic code
+
+# LGE_CHANGE_S, 20120509, gwangseop.go@lge.com, addition of service and spritebud file for LinkBackup
+#service spritebud /system/xbin/spritebud
+#    socket spritebud stream 660 root radio
+#    class main
+#    user root
+#    group root
+# LGE_CHANGE_E, 20120509, gwangseop.go@lge.com
+#service ssbd /system/bin/ssbd # FEATURE_SDCARD_ENCRYPTION dongjune.kim@lge.com
+#    class main
+#    disabled
+
+# FEATURE_SDCARD_ENCRYPTION dongjune.kim@lge.com
+#on property:ssbd.enable=1
+#    start ssbd
+#on property:ssbd.enable=0
+#    stop ssbd
+
+setprop vold.post_fs_data_done 1 

@@ -1,2 +1,2 @@
-require board=geehrc|J1TM
+require board=j1|J1SP
 

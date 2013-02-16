@@ -18,18 +18,19 @@
 # $(call inherit-product, device/sample/products/backup_overlay.mk)
 
 # Get the long list of APNs
-PRODUCT_COPY_FILES := device/sample/etc/apns-full-conf.xml:system/etc/apns-conf.xml
+PRODUCT_COPY_FILES := device/sample/etc/apns-full-conf.xml:system/etc/apns-conf.xml \
+	frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml
 
 # Inherit from the common Open Source product configuration
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
-PRODUCT_DEVICE := geehrc_sp
-PRODUCT_NAME := full_geehrc_sp
+PRODUCT_DEVICE := geehrc4g_spr_us
+PRODUCT_NAME := cm_geehrc4g_spr_us
 PRODUCT_BRAND := LGE
-PRODUCT_MODEL := geehrc4g_sp
+PRODUCT_MODEL := LG-LS970
 PRODUCT_MANUFACTURER := LGE
-PRODUCT_RESTRICT_VENDOR_FILES := false
+PRODUCT_RESTRICT_VENDOR_FILES := true
 
 # Inherit from hardware-specific part of the product configuration
-$(call inherit-product, device/lge/geehrc_sp/geehrc_sp.mk)
+$(call inherit-product, device/lge/geehrc4g_spr_us/geehrc4g_spr_us.mk)
 $(call inherit-product-if-exists, vendor/lge/geehrc_sp/geehrc-vendor.mk)
