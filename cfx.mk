@@ -5,6 +5,9 @@ $(call inherit-product, vendor/cm/config/cdma.mk)
 PRODUCT_COPY_FILES += \
     vendor/cm/prebuilt/common/bootanimation/720.zip:system/media/bootanimation.zip
 
+# Inherit from the common Open Source product configuration
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+
 # Inherit some common CFX stuff.
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 
