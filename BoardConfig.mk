@@ -24,7 +24,7 @@ TARGET_KERNEL_SOURCE := kernel/lge/gee
 -include device/lge/gee-common/BoardConfigCommon.mk
 
 # assert
-TARGET_OTA_ASSERT_DEVICE := geehrc,geehrc4g,geehrc_sp,ls970,geehrc4g_spr_us
+TARGET_OTA_ASSERT_DEVICE := geehrc,geehrc4g,gee_sp,geehrc_sp,ls970,geehrc4g_spr_us
 
 # board-info
 TARGET_BOARD_INFO_FILE := device/lge/geehrc4g_spr_us/board-info.txt
