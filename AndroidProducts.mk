@@ -15,4 +15,4 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/full_geehrc4g_spr_us.mk
+    $(LOCAL_DIR)/cfx.mk
