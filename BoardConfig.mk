@@ -26,12 +26,10 @@ TARGET_KERNEL_SOURCE := kernel/lge/gee
 -include device/lge/gee-common/BoardConfigCommon.mk
 
 # assert
-TARGET_OTA_ASSERT_DEVICE := geebus,geebusc,geehrc,geehrc4g,gee_sp,geehrc_sp,ls970,geehrc4g_spr_us
+TARGET_OTA_ASSERT_DEVICE := geebus,geebusc,geehrc,geehrc4g,gee_sp,geehrc_sp,ls970,geehrc4g_spr_us,jeebus,jeebusc
 
 # board-info
 TARGET_BOARD_INFO_FILE := device/lge/geehrc4g_spr_us/board-info.txt
 
 # inherit from the proprietary version
 -include vendor/lge/geehrc_sp/BoardConfigVendor.mk
-
-TARGET_PROVIDES_INIT_RC := true

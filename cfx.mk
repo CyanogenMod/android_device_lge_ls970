@@ -19,7 +19,7 @@ PRODUCT_COPY_FILES += device/sample/etc/apns-full-conf.xml:system/etc/apns-conf.
         frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml
 
 # Inherit device configuration
-$(call inherit-product, device/lge/geehrc4g_spr_us/geehrc4g_spr_us.mk)
+$(call inherit-product, device/lge/geehrc4g_spr_us/device.mk)
 $(call inherit-product-if-exists, vendor/lge/geehrc_sp/geehrc-vendor.mk)
 
 ## Device identifier. This must come after all inclusions

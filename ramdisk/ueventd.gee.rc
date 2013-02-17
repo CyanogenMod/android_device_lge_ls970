@@ -1,4 +1,0 @@
-/dev/oncrpc/*             0660   root       qcom_oncrpc
-
-# secure clock
-/dev/secclk               0600  system       system
