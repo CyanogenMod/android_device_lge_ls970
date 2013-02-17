@@ -2,8 +2,7 @@
 $(call inherit-product, vendor/cm/config/cdma.mk)
 
 # Boot animation
-PRODUCT_COPY_FILES += \
-    vendor/cm/prebuilt/common/bootanimation/720.zip:system/media/bootanimation.zip
+PRODUCT_COPY_FILES += vendor/cm/prebuilt/common/bootanimation/720.zip:system/media/bootanimation.zip
 
 # Inherit from the common Open Source product configuration
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
@@ -15,8 +14,7 @@ $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 $(call inherit-product, vendor/cm/config/nfc_enhanced.mk)
 
 # Get the long list of APNs
-PRODUCT_COPY_FILES += device/sample/etc/apns-full-conf.xml:system/etc/apns-conf.xml \
-        frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml
+PRODUCT_COPY_FILES += device/sample/etc/apns-full-conf.xml:system/etc/apns-conf.xml
 
 # Inherit device configuration
 $(call inherit-product, device/lge/geehrc4g_spr_us/device.mk)
