@@ -16,7 +16,6 @@ $(call inherit-product, vendor/cm/config/nfc_enhanced.mk)
 
 # Inherit device configuration
 $(call inherit-product, device/lge/geehrc4g_spr_us/device.mk)
-$(call inherit-product-if-exists, vendor/lge/geehrc_sp/geehrc-vendor.mk)
 
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := geehrc4g_spr_us

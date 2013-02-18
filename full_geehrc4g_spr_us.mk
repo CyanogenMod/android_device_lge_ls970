@@ -32,4 +32,3 @@ PRODUCT_RESTRICT_VENDOR_FILES := false
 
 # Inherit from hardware-specific part of the product configuration
 $(call inherit-product, device/lge/geehrc4g_spr_us/geehrc4g_spr_us.mk)
-$(call inherit-product-if-exists, vendor/lge/geehrc_sp/geehrc-vendor.mk)
