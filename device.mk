@@ -38,8 +38,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     
 # PRODUCT_CHARACTERISTICS := nosdcard  
 
-PRODUCT_COPY_FILES += \
-
 # Ramdisk
 PRODUCT_COPY_FILES += \
     device/lge/geehrc4g_spr_us/init.geehrc4g_spr_us.rc:root/init.geehrc4g_spr_us.rc \  
