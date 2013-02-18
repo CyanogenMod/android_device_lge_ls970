@@ -40,7 +40,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Ramdisk
 PRODUCT_COPY_FILES += \
-    device/lge/geehrc4g_spr_us/init.geehrc4g_spr_us.rc:root/init.geehrc4g_spr_us.rc \  
+    device/lge/geehrc4g_spr_us/init.geehrc4g_spr_us.rc:root/init.geehrc4g_spr_us.rc \
     device/lge/geehrc4g_spr_us/init.geehrc4g_spr_us.usb.rc:root/init.geehrc4g_spr_us.usb.rc
 
 # These are the hardware-specific features
