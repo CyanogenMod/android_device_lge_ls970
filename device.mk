@@ -48,5 +48,4 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml
 
-PRODUCT_PACKAGES += \
-        camera.geehrc
+PRODUCT_PACKAGES += camera.geehrc
