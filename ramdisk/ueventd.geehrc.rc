@@ -206,8 +206,12 @@ input
 system
 /sys/devices/virtual/smdpkt/smdcntl*       open_timeout   0664 
 radio radio
-#permissions for sensors
+
+# Permissions for sensors
 /dev/msm_dsps             0660  system       system
+
+/dev/ks_bridge            0660    system        system
+/dev/efs_bridge           0660    system        system
 
 # DVB devices
 /dev/dvb/adapter0/demux*  0444   media       media
