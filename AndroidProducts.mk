@@ -15,4 +15,4 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/cfx.mk
+    $(LOCAL_DIR)/cm.mk
