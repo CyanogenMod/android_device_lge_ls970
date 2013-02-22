@@ -42,7 +42,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_COPY_FILES += \
     device/lge/geehrc4g_spr_us/ramdisk/init.geehrc.rc:root/init.geehrc.rc \
     device/lge/geehrc4g_spr_us/ramdisk/ueventd.geehrc.rc:root/ueventd.geehrc.rc \
-    device/lge/geehrc4g_spr_us/ramdisk/fstab.geehrc:root/fstab.geehrc
+    device/lge/geehrc4g_spr_us/ramdisk/fstab.gee:root/fstab.gee
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
