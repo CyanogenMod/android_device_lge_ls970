@@ -31,6 +31,9 @@ DEVICE_PACKAGE_OVERLAYS += device/lge/gee-common/overlay-cdma
 # Inherit from gee-common
 $(call inherit-product, device/lge/gee-common/gee-common.mk)
 
+PRODUCT_PACKAGES := \
+    lights.geehrc
+
 # Enable for debugging
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.debuggable=1 \
