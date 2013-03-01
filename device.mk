@@ -45,11 +45,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # QC RIL path for rild
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-        rild.libpath=/system/lib/libril-qc-qmi-1.so
+        rild.libpath=/system/lib/libril-qc-qmi-1.so \
+        rild.libargs=-d /dev/smd0
 
 # Telephony Properties
 PRODUCT_PROPERTY_OVERRIDES += \
-        ro.telephony.ril_class=LGEQualcommUiccRIL \
         ro.cdma.home.operator.numeric=310120 \
         ro.cdma.home.operator.alpha=Sprint \
         telephony.lteOnCdmaDevice=1 \
@@ -60,7 +60,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
         ro.cdma.subscribe_on_ruim_ready=true \
         persist.radio.no_wait_for_card=1 \
         keyguard.no_require_sim=true \
-        ro.config.svlte1x=true
+        ro.config.svlte1x=true \
+        telephony.sms.pseudo_multipart=1 \
+        DEVICE_PROVISIONED=1
+
     
 # PRODUCT_CHARACTERISTICS := nosdcard  
 
