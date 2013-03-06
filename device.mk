@@ -31,9 +31,6 @@ DEVICE_PACKAGE_OVERLAYS += device/lge/gee-common/overlay-cdma
 # Inherit from gee-common
 $(call inherit-product, device/lge/gee-common/gee-common.mk)
 
-PRODUCT_PACKAGES := \
-    lights.geehrc
-
 # Enable for debugging
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.debuggable=1 \
@@ -77,4 +74,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml
 
+# CameraHAL
 PRODUCT_PACKAGES += camera.geehrc
+
