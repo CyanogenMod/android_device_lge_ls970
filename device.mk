@@ -42,7 +42,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # QC RIL path for rild
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-        rild.libpath=/system/lib/libril-qc-qmi-1.so \
         rild.libargs=-d /dev/smd0
 
 # Telephony Properties
