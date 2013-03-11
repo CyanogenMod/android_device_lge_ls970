@@ -61,6 +61,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
         telephony.sms.pseudo_multipart=1 \
         DEVICE_PROVISIONED=1
 
+#13 MP camera in About Phone / Hardware Info 
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.device.rear_cam=13 MP 
+
     
 # PRODUCT_CHARACTERISTICS := nosdcard  
 
