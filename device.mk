@@ -46,7 +46,7 @@ PRODUCT_COPY_FILES += \
 
 #13 MP camera in About Phone / Hardware Info 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.device.rear_cam=13 MP \
+    ro.device.rear_cam=13 MP 
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
