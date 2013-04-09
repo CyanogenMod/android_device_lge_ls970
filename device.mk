@@ -35,13 +35,39 @@ $(call inherit-product, device/lge/gee-common/gee-common.mk)
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.debuggable=1 \
     persist.service.adb.enable=1
+
+# Do not power down SIM card when modem is sent to Low Power Mode.
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.radio.apm_sim_not_pwdn=1
+
+# QC RIL path for rild
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+        rild.libargs=-d /dev/smd0
+
+# Telephony Properties
+PRODUCT_PROPERTY_OVERRIDES += \
+        ro.telephony.ril_class=LGEQualcommCDMARIL \
+        ro.cdma.home.operator.numeric=310120 \
+        ro.cdma.home.operator.alpha=Sprint \
+        telephony.lteOnCdmaDevice=1 \
+        telephony.lte.cdma.device=1 \
+        ro.telephony.default_network=8 \
+        ro.ril.def.preferred.network=8 \
+        ril.subscription.types=NV,RUIM \
+        ro.cdma.subscribe_on_ruim_ready=true \
+        persist.radio.no_wait_for_card=1 \
+        keyguard.no_require_sim=true \
+        ro.config.svlte1x=true \
+        telephony.sms.pseudo_multipart=1 \
+        DEVICE_PROVISIONED=1
+
     
 # PRODUCT_CHARACTERISTICS := nosdcard  
 
 # Ramdisk
 PRODUCT_COPY_FILES += \
-    device/lge/geehrc4g_spr_us/ramdisk/init.geehrc.rc:root/init.geehrc.rc \
-    device/lge/geehrc4g_spr_us/ramdisk/ueventd.geehrc.rc:root/ueventd.geehrc.rc \
+    device/lge/geehrc4g_spr_us/ramdisk/init.geehrc4g_spr_us.rc:root/init.geehrc4g_spr_us.rc \
+    device/lge/geehrc4g_spr_us/ramdisk/ueventd.geehrc4g_spr_us.rc:root/ueventd.geehrc4g_spr_us.rc \
     device/lge/geehrc4g_spr_us/ramdisk/fstab.gee:root/fstab.gee
 
 #13 MP camera in About Phone / Hardware Info 
@@ -52,4 +78,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_COPY_FILES += \
    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml
 
-PRODUCT_PACKAGES += camera.geehrc
+# CameraHAL
+PRODUCT_PACKAGES += \
+   camera.geehrc4g_spr_us
+                   
+
