@@ -66,8 +66,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Ramdisk
 PRODUCT_COPY_FILES += \
-    device/lge/geehrc4g_spr_us/ramdisk/init.geehrc.rc:root/init.geehrc.rc \
-    device/lge/geehrc4g_spr_us/ramdisk/ueventd.geehrc.rc:root/ueventd.geehrc.rc \
+    device/lge/geehrc4g_spr_us/ramdisk/init.geehrc4g_spr_us.rc:root/init.geehrc4g_spr_us.rc \
+    device/lge/geehrc4g_spr_us/ramdisk/ueventd.geehrc4g_spr_us.rc:root/ueventd.geehrc4g_spr_us.rc \
     device/lge/geehrc4g_spr_us/ramdisk/fstab.gee:root/fstab.gee
 
 # These are the hardware-specific features
@@ -75,5 +75,7 @@ PRODUCT_COPY_FILES += \
    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml
 
 # CameraHAL
-PRODUCT_PACKAGES += camera.geehrc
+PRODUCT_PACKAGES += \
+   camera.geehrc4g_spr_us
+                   
 
