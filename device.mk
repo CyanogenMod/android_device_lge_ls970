@@ -70,10 +70,6 @@ PRODUCT_COPY_FILES += \
     device/lge/geehrc4g_spr_us/ramdisk/ueventd.geehrc4g_spr_us.rc:root/ueventd.geehrc4g_spr_us.rc \
     device/lge/geehrc4g_spr_us/ramdisk/fstab.gee:root/fstab.gee
 
-#13 MP camera in About Phone / Hardware Info 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.device.rear_cam=13 MP 
-
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml
