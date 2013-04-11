@@ -28,8 +28,6 @@ TARGET_KERNEL_SOURCE := kernel/lge/geem
 #Add Custom RIL class automatically
 BOARD_RIL_CLASS := "../../../device/lge/geehrc4g_spr_us/LGEQualcommCDMARIL"
 
-TARGET_SPECIFIC_HEADER_PATH := device/lge/geehrc4g_spr_us/include
-
 # inherit from gee-common
 -include device/lge/gee-common/BoardConfigCommon.mk
 
