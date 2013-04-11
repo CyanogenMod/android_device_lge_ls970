@@ -20,7 +20,7 @@
 # Everything in this directory will become public
 
 ## (2) Also get non-open-source specific aspects if available
-$(call inherit-product-if-exists, vendor/lge/geehrc_sp/geehrc-vendor.mk)
+$(call inherit-product-if-exists, vendor/lge/gee/gee-vendor.mk)
 
 ## overlays
 DEVICE_PACKAGE_OVERLAYS += device/lge/geehrc4g_spr_us/overlay

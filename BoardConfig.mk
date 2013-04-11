@@ -40,4 +40,4 @@ TARGET_OTA_ASSERT_DEVICE := geebus,geebusc,geehrc,geehrc4g,gee_sp,geehrc_sp,ls97
 TARGET_BOARD_INFO_FILE := device/lge/geehrc4g_spr_us/board-info.txt
 
 # inherit from the proprietary version
--include vendor/lge/geehrc_sp/BoardConfigVendor.mk
+-include vendor/lge/gee/BoardConfigVendor.mk
