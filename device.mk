@@ -64,6 +64,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     
 # PRODUCT_CHARACTERISTICS := nosdcard  
 
+# GPS configuration
+PRODUCT_COPY_FILES += \
+        device/lge/geehrc4g_spr_us/configs/gps.conf:system/etc/gps.conf
+
 # Ramdisk
 PRODUCT_COPY_FILES += \
     device/lge/geehrc4g_spr_us/ramdisk/init.geehrc4g_spr_us.rc:root/init.geehrc4g_spr_us.rc \
