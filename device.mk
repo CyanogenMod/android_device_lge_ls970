@@ -60,7 +60,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
         ro.cdma.subscribe_on_ruim_ready=true \
         persist.radio.no_wait_for_card=1 \
         keyguard.no_require_sim=true \
-        ro.config.svlte1x=true \
         telephony.sms.pseudo_multipart=1 \
         DEVICE_PROVISIONED=1
 
