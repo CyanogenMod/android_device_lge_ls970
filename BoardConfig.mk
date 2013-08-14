@@ -14,28 +14,25 @@
 # limitations under the License.
 #
 
-BOARD_KERNEL_CMDLINE := console=ttySHL0,115200,n8 androidboot.hardware=geehrc4g_spr_us lpj=67677
+BOARD_KERNEL_CMDLINE := console=ttySHL0,115200,n8 androidboot.hardware=ls970 lpj=67677
 BOARD_KERNEL_BASE := 0x80200000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01600000
 
-#TARGET_KERNEL_CONFIG := j1sp-perf_defconfig
-#TARGET_KERNEL_SOURCE := kernel/lge/gee
-
-TARGET_KERNEL_CONFIG := geehrc_defconfig
-TARGET_KERNEL_SOURCE := kernel/lge/geem
+TARGET_KERNEL_CONFIG := cyanogenmod_ls970_defconfig
+TARGET_KERNEL_SOURCE := kernel/lge/ls970
 
 #Add Custom RIL class automatically
-BOARD_RIL_CLASS := "../../../device/lge/geehrc4g_spr_us/LGEQualcommCDMARIL"
+BOARD_RIL_CLASS := "../../../device/lge/ls970/LGEQualcommCDMARIL"
 
-# inherit from gee-common
--include device/lge/gee-common/BoardConfigCommon.mk
+# inherit from ls970-common
+-include device/lge/ls970-common/BoardConfigCommon.mk
 
 # assert
-TARGET_OTA_ASSERT_DEVICE := geebus,geebusc,geehrc,geehrc4g,gee_sp,geehrc_sp,ls970,geehrc4g_spr_us,jeebus,jeebusc
+TARGET_OTA_ASSERT_DEVICE := geebus,geebusc,geehrc,geehrc4g,gee_sp,geehrc_sp,geehrc4g_spr_us,ls970,jeebus,jeebusc
 
 # board-info
-TARGET_BOARD_INFO_FILE := device/lge/geehrc4g_spr_us/board-info.txt
+TARGET_BOARD_INFO_FILE := device/lge/ls970/board-info.txt
 
 # inherit from the proprietary version
--include vendor/lge/gee/BoardConfigVendor.mk
+-include vendor/lge/ls970/BoardConfigVendor.mk

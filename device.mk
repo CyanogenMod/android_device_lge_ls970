@@ -14,25 +14,20 @@
 # limitations under the License.
 #
 
-# This file includes all definitions that apply to ALL geehrc devices, and
-# are also specific to geehrc devices
-#
-# Everything in this directory will become public
-
 ## (2) Also get non-open-source specific aspects if available
-$(call inherit-product-if-exists, vendor/lge/gee/gee-vendor.mk)
+$(call inherit-product-if-exists, vendor/lge/ls970/ls970-vendor.mk)
 
 ## overlays
-DEVICE_PACKAGE_OVERLAYS += device/lge/geehrc4g_spr_us/overlay
+DEVICE_PACKAGE_OVERLAYS += device/lge/ls970/overlay
 
 ## common overlays
-DEVICE_PACKAGE_OVERLAYS += device/lge/gee-common/overlay-cdma
+DEVICE_PACKAGE_OVERLAYS += device/lge/ls970-common/overlay-cdma
 
 PRODUCT_PACKAGES := \
-	lights.geehrc4g_spr_us
+	lights.ls970
 
-# Inherit from gee-common
-$(call inherit-product, device/lge/gee-common/gee-common.mk)
+# Inherit from ls970-common
+$(call inherit-product, device/lge/ls970-common/ls970-common.mk)
 
 # Enable for debugging
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -68,17 +63,17 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # GPS configuration
 PRODUCT_COPY_FILES += \
-        device/lge/geehrc4g_spr_us/configs/gps.conf:system/etc/gps.conf
+        device/lge/ls970/configs/gps.conf:system/etc/gps.conf
 
 # Ramdisk
 PRODUCT_COPY_FILES += \
-    device/lge/geehrc4g_spr_us/ramdisk/init.geehrc4g_spr_us.rc:root/init.geehrc4g_spr_us.rc \
-    device/lge/geehrc4g_spr_us/ramdisk/ueventd.geehrc4g_spr_us.rc:root/ueventd.geehrc4g_spr_us.rc \
-    device/lge/geehrc4g_spr_us/ramdisk/fstab.gee:root/fstab.gee
+    device/lge/ls970/ramdisk/init.ls970.rc:root/init.ls970.rc \
+    device/lge/ls970/ramdisk/ueventd.ls970.rc:root/ueventd.ls970.rc \
+    device/lge/ls970/ramdisk/fstab.ls970:root/fstab.ls970
 
 # NFC Firmware
 PRODUCT_COPY_FILES += \
-    device/lge/geehrc4g_spr_us/prebuilt/libpn544_fw.so:system/vendor/firmware/libpn544_fw.so \
+    device/lge/ls970/prebuilt/libpn544_fw.so:system/vendor/firmware/libpn544_fw.so \
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
@@ -86,6 +81,6 @@ PRODUCT_COPY_FILES += \
 
 # CameraHAL
 PRODUCT_PACKAGES += \
-   camera.geehrc4g_spr_us
+   camera.ls970
                    
 

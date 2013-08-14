@@ -14,7 +14,12 @@
 # limitations under the License.
 #
 
-import init.gee.rc
+import init.ls970-common.rc
+
+on fs
+    # mount ALL THE THINGS
+    mount_all ./fstab.ls970
+    setprop ro.crypto.fuse_sdcard true
 
 on init
     # See storage config details at http://source.android.com/tech/storage/
