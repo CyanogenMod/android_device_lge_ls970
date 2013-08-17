@@ -15,7 +15,7 @@
 #
 
 ## (2) Also get non-open-source specific aspects if available
-$(call inherit-product-if-exists, vendor/lge/ls970/ls970-vendor.mk)
+$(call inherit-product-if-exists, vendor/lge/e975/e975-vendor.mk)
 
 ## overlays
 DEVICE_PACKAGE_OVERLAYS += device/lge/ls970/overlay
@@ -40,8 +40,8 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
         rild.libargs=-d /dev/smd0
 
 # Telephony Properties
+#        ro.telephony.ril_class=LGEQualcommCDMARIL \
 PRODUCT_PROPERTY_OVERRIDES += \
-        ro.telephony.ril_class=LGEQualcommCDMARIL \
         ro.cdma.home.operator.numeric=310120 \
         ro.cdma.home.operator.alpha=Sprint \
         telephony.lteOnCdmaDevice=1 \
