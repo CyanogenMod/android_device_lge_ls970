@@ -26,21 +26,17 @@ DEVICE_PACKAGE_OVERLAYS += device/lge/ls970-common/overlay-cdma
 # Inherit from ls970-common
 $(call inherit-product, device/lge/ls970-common/ls970-common.mk)
 
+PRODUCT_PACKAGES += \
+	lights.ls970
+
 # Enable for debugging
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.debuggable=1 \
     persist.service.adb.enable=1
 
-# Do not power down SIM card when modem is sent to Low Power Mode.
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.radio.apm_sim_not_pwdn=1
 
-# QC RIL path for rild
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-        rild.libargs=-d /dev/smd0
 
 # Telephony Properties
-#        ro.telephony.ril_class=LGEQualcommCDMARIL \
 PRODUCT_PROPERTY_OVERRIDES += \
         ro.cdma.home.operator.numeric=310120 \
         ro.cdma.home.operator.alpha=Sprint \
@@ -55,12 +51,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
         telephony.sms.pseudo_multipart=1 \
         DEVICE_PROVISIONED=1
 
-    
-# PRODUCT_CHARACTERISTICS := nosdcard  
-
-# GPS configuration
-PRODUCT_COPY_FILES += \
-        device/lge/ls970/configs/gps.conf:system/etc/gps.conf
+PRODUCT_CHARACTERISTICS := nosdcard  
 
 # Ramdisk
 PRODUCT_COPY_FILES += \
@@ -68,16 +59,6 @@ PRODUCT_COPY_FILES += \
     device/lge/ls970/ramdisk/ueventd.ls970.rc:root/ueventd.ls970.rc \
     device/lge/ls970/ramdisk/fstab.ls970:root/fstab.ls970
 
-# NFC Firmware
-PRODUCT_COPY_FILES += \
-    device/lge/ls970/prebuilt/lights.msm8960.so:system/lib/hw/lights.msm8960.so
-
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml
-
-# CameraHAL
-PRODUCT_PACKAGES += \
-   camera.ls970
-                   
-
