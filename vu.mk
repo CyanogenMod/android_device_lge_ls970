@@ -9,22 +9,25 @@ TARGET_SCREEN_WIDTH := 768
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Inherit some common CM stuff.
-$(call inherit-product, vendor/cm/config/common_full_phone.mk)
+$(call inherit-product, vendor/vanilla/config/common_full_phone.mk)
 
 # Enhanced NFC
-$(call inherit-product, vendor/cm/config/nfc_enhanced.mk)
+$(call inherit-product, vendor/vanilla/config/nfc_enhanced.mk)
 
 # Inherit from hardware-specific part of the product configuration
 $(call inherit-product, device/lge/ls970/full_ls970.mk)
 
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := ls970
-PRODUCT_NAME := cm_ls970
+PRODUCT_NAME := vu_ls970
 PRODUCT_BRAND := LGE
 PRODUCT_MODEL := LG-LS970
 PRODUCT_MANUFACTURER := LGE
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_FINGERPRINT=google/occam/mako:4.2.2/JDQ39/573038:user/release-keys PRIVATE_BUILD_DESC="occam-user 4.2.2 JDQ39 573038 release-keys"
+
+PRODUCT_COPY_FILES += \
+    vendor/vanilla/prebuilt/bootanimation/bootanimation_720_720.zip:system/media/bootanimation-alt.zip
 
 # Enable Torch
 #PRODUCT_PACKAGES += Torch
