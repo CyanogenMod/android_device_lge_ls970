@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-add_lunch_combo cm_ls970-userdebug
+add_lunch_combo vu_ls970-userdebug
