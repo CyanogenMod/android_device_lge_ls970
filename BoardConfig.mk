@@ -22,7 +22,7 @@ TARGET_RECOVERY_FSTAB := device/lge/ls970/ramdisk/fstab.ls970
 RECOVERY_FSTAB_VERSION := 2
 
 # inherit from ls970-common
--include device/lge/ls970-common/BoardConfigCommon.mk
+include device/lge/ls970-common/BoardConfigCommon.mk
 
 # assert
 TARGET_OTA_ASSERT_DEVICE := geebus,geebusc,geehrc,geehrc4g,gee_sp,geehrc_sp,geehrc4g_spr_us,ls970,jeebus,jeebusc
@@ -31,4 +31,4 @@ TARGET_OTA_ASSERT_DEVICE := geebus,geebusc,geehrc,geehrc4g,gee_sp,geehrc_sp,geeh
 TARGET_BOARD_INFO_FILE := device/lge/ls970/board-info.txt
 
 # inherit from the proprietary version
--include vendor/lge/e975/BoardConfigVendor.mk
+include vendor/lge/ls970/BoardConfigVendor.mk
