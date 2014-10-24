@@ -15,7 +15,7 @@
 #
 
 ## (2) Also get non-open-source specific aspects if available
-$(call inherit-product-if-exists, vendor/lge/e975/e975-vendor.mk)
+$(call inherit-product-if-exists, vendor/lge/ls970/ls970-vendor.mk)
 
 ## overlays
 DEVICE_PACKAGE_OVERLAYS += device/lge/ls970/overlay
